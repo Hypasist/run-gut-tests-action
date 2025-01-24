@@ -16,7 +16,7 @@ inputs:
     default: ''
   godotFlags:
     description: "Extra flags to pass to godot, e.g. --headless"
-    default: '--headless --quoted "hello this is one \"flag\" with quotes"'
+    default: '--headless'
   directory:
     description: "The name directory to run tests in."
 runs:
