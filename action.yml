@@ -21,7 +21,7 @@ inputs:
     description: "The name directory to run tests in."
 runs:
   using: "node20"
-  main: "dist/main.js"
+  main: "dist/index.js"
 branding:
   icon: cpu
   color: yellow

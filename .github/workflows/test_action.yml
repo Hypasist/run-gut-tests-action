@@ -14,8 +14,9 @@ jobs:
     - name: Bundle Action Package
       # rebuild the package to ensure that dist has been built and matches main.js
       # I really hate committing artifacts into git pls there must be a better way
-      run: npm run package && [ -z "$(git status --porcelain dist)" ]
+      run: npm run package && [ -z "$(git status --porcelain dist/index.js)" ] || (git status dist; false)
     - run: ./test_proj/install_gut.sh
+    - run: rm -rf node_modules
     - name: Run Action
       uses: ./
       with:
@@ -38,8 +39,9 @@ jobs:
     - name: Bundle Action Package
       # rebuild the package to ensure that dist has been built and matches main.js
       # I really hate committing artifacts into git pls there must be a better way
-      run: npm run package && [ -z "$(git status --porcelain dist)" ]
+      run: npm run package && [ -z "$(git status --porcelain dist/*.js)" ] || (git status dist; false)
     - run: ./test_proj/install_gut.sh
+    - run: rm -rf node_modules
     - name: Run Action
       uses: ./
       with:
