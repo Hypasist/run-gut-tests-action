@@ -64287,7 +64287,7 @@ try {
       function onFinished(err, output)
       {
         console.log("Starting image...");
-        docker.run(docker_image, [godot_executable, ...flags, '-d', '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd'], process.stdout,
+        docker.run(docker_image, [godot_executable, ...flags, '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd'], process.stdout,
 
           // Mount working directory to `/project`
           { HostConfig: { Binds: [ process.cwd() + ":/project" ] }},
@@ -64316,7 +64316,7 @@ try {
   {
     console.log("Running GUT tests locally");
     var quoted_flags = flags.map(f => `"${f.replace(/"\\/g, m => `\\${m}`)}"`).join(' ');
-    var result = spawnSync(`${godot_executable} ${quoted_flags} d -s --path . addons/gut/gut_cmdln.gd`, {
+    var result = spawnSync(`${godot_executable} ${quoted_flags} -s --path . addons/gut/gut_cmdln.gd`, {
       stdio: 'inherit',
       shell: true
     });
