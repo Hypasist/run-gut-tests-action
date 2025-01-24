@@ -1,4 +1,4 @@
-![Release Version](https://img.shields.io/github/v/release/manleydev/run-gut-tests-action) ![Test Action](https://github.com/manleydev/run-gut-tests-action/workflows/Test%20Action/badge.svg)
+![Release Version](https://img.shields.io/github/v/release/jamie-pate/run-gut-tests-action) ![Test Action](https://github.com/jamie-pate/run-gut-tests-action/workflows/Test%20Action/badge.svg)
 
 # Run GUT tests
 This is an action that runs [GUT](https://github.com/bitwes/Gut) tests for Godot to easily automate testing.
