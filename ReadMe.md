@@ -11,9 +11,11 @@ Example:
 
 ```yaml
 steps:
-- uses: manleydev/run-gut-tests-action@[VERSION]
+- uses: jamie-pate/run-gut-tests-action@[VERSION]
   with:
     directory: client
+    godotFlags: --headless
+    gutConfigpath: tests/.gutconfig.json
 ```
 
 ### Inputs
@@ -33,6 +35,15 @@ steps:
 #### godotExecutable
 
     Path of Godot binary to call when running GUT tests. Defaults to `godot`
+
+#### godotFlags
+
+    Flags to pass to godot (an array)
+
+#### gutConfigPath
+
+    Path to gut config file (inside `directory`))
+
 
 
 ## Configure GUT

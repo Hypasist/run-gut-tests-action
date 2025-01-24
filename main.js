@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const { spawnSync } = require("child_process");
 const fs = require('fs');
 const path = require('path')
+const splitString = require('split-string');
 
 // Setup Docker
 const Docker = require('dockerode');
@@ -14,14 +15,25 @@ try {
   var work_dir = core.getInput('directory');
   var use_container = core.getInput('useContainer');
   var godot_executable = core.getInput('godotExecutable');
+  var flags = core.getInput('godotFlags');
+  var gut_config = core.getInput('gutConfigPath');
 
+  flags = splitString(flags, {separator: ' ', quotes: ['"', "'"]});
+
+  if(gut_config){
+    if(use_container == "true")
+    {
+      gut_config = path.join('/project', gut_config);
+    }
+    flags.push('-gconfig', gut_config);
+  }
   if(work_dir)
   {
     process.chdir(work_dir);
   }
 
   if(use_container == "true")
-  {  
+  {
 
     // Pull docker image for building
     console.log("Pulling build image...");
@@ -33,26 +45,26 @@ try {
       // Wait to run build until after pull complete
       function onFinished(err, output)
       {
-        console.log("Starting image...")
-        docker.run(docker_image, [godot_executable, '-d', '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd'], process.stdout, 
-        
-        // Mount working directory to `/project`
-        { HostConfig: { Binds: [ process.cwd() + ":/project" ] }},
-        
-        function (err, data, container) {
+        console.log("Starting image...");
+        docker.run(docker_image, [godot_executable, ...flags, '-d', '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd'], process.stdout,
 
-          if(err)
-          {
-            core.setFailed(error.message);
-          }
+          // Mount working directory to `/project`
+          { HostConfig: { Binds: [ process.cwd() + ":/project" ] }},
 
-          console.log("Tests exited with status: " + data.StatusCode);
+          function (err, data, container) {
 
-          if( data.StatusCode != "0" )
-          {
-              core.setFailed("GUT tests failed!");
-          }
-      
+            if(err)
+            {
+              core.setFailed(error.message);
+            }
+
+            console.log("Tests exited with status: " + data.StatusCode);
+
+            if( data.StatusCode != "0" )
+            {
+                core.setFailed("GUT tests failed!");
+            }
+
         })
       }
       function onProgress(event) {}
@@ -62,8 +74,8 @@ try {
   else
   {
     console.log("Running GUT tests locally");
-
-    var result = spawnSync(`${godot_executable} -d -s --path . addons/gut/gut_cmdln.gd`, {
+    var quoted_flags = flags.map(f => `"${f.replace(/"\\/g, m => `\\${m}`)}"`).join(' ');
+    var result = spawnSync(`${godot_executable} ${quoted_flags} d -s --path . addons/gut/gut_cmdln.gd`, {
       stdio: 'inherit',
       shell: true
     });
@@ -72,7 +84,7 @@ try {
     {
       core.setFailed("GUT tests failed!");
     }
-  
+
   }
 
 } catch (error) {

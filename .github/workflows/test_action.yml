@@ -7,22 +7,43 @@ jobs:
     name: "Test Action with Container"
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - uses: bahmutov/npm-install@v1
+    - name: Bundle Action Package
+      # rebuild the package to ensure that dist has been built and matches main.js
+      # I really hate committing artifacts into git pls there must be a better way
+      run: npm run package && [ -z "$(git status --porcelain dist)" ]
+    - run: ./test_proj/install_gut.sh
     - name: Run Action
       uses: ./
       with:
         directory: test_proj
+        gutConfigPath: .gutconfig.json
+        godotFlags: --headless
   test_2:
     name: "Test Action Locally"
     runs-on: ubuntu-latest
     container:
       image: barichello/godot-ci:latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+    - uses: bahmutov/npm-install@v1
+    - name: Bundle Action Package
+      # rebuild the package to ensure that dist has been built and matches main.js
+      # I really hate committing artifacts into git pls there must be a better way
+      run: npm run package && [ -z "$(git status --porcelain dist)" ]
+    - run: ./test_proj/install_gut.sh
     - name: Run Action
       uses: ./
       with:
         directory: test_proj
         useContainer: false
+        gutConfigPath: .gutconfig.json
+        godotFlags: --headless

@@ -1,4 +1,4 @@
-name: "Run GUT Tests"
+name: "Run GUT Tests for Godot4"
 description: "Run GUT tests for a Godot project"
 author: "josephbmanley"
 inputs:
@@ -11,11 +11,17 @@ inputs:
   godotExecutable:
     description: "Path of Godot binary to call when running GUT tests."
     default: godot
+  gutConfigPath:
+    description: "Path to gut config relative to directory"
+    default: ''
+  godotFlags:
+    description: "Extra flags to pass to godot, e.g. --headless"
+    default: '--headless --quoted "hello this is one \"flag\" with quotes"'
   directory:
     description: "The name directory to run tests in."
 runs:
-  using: "node12"
-  main: "dist/index.js"
+  using: "node20"
+  main: "dist/main.js"
 branding:
   icon: cpu
   color: yellow
