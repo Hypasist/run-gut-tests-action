@@ -17,6 +17,8 @@ try {
   var godot_executable = core.getInput('godotExecutable');
   var flags = core.getInput('godotFlags');
   var gut_config = core.getInput('gutConfigPath');
+  var import_resources = core.getInput('importGodotResources');
+  // var download_gut = core.getInput('downloadGut');
 
   flags = splitString(flags, {separator: ' ', quotes: ['"', "'"]});
 
