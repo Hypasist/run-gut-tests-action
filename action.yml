@@ -20,7 +20,7 @@ inputs:
   directory:
     description: "The name directory to run tests in."
   importGodotResources:
-    descritpion: "Boolean value of whether or not to run godot with '--import' flag before testing.
+    descritpion: "Boolean value of whether or not to run godot with '--import' flag before testing."
     default: 'false'
 runs:
   using: "node20"
