@@ -47,7 +47,7 @@ try {
       // Wait to run build until after pull complete
       function onFinished(err, output)
       {
-        console.log("Starting image...");
+        console.log("Starting FUCKING HELL WHY IS THIS NOT CHANGING image...");
         console.log("Starting import run...");
         docker.run(docker_image, [godot_executable, '--headless', '--verbose', '--import', '--path', '/project'], process.stdout,
         // console.log("Starting test run...");
