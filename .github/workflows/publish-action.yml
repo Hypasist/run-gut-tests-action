@@ -22,6 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update the ${{ env.TAG_NAME }} tag
-        uses: actions/publish-action@v0.3.0
+        uses: Hypasist/action-demo@f3270a6b158a1579da3a1a99fb78e8d3266068fd
         with:
           source-tag: ${{ env.TAG_NAME }}
