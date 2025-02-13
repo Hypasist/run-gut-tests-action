@@ -49,7 +49,7 @@ try {
       {
         console.log("Starting image...");
         console.log("Starting import run...);
-        docker.run(docker_image, [godot_executable, ...flags, '--import', '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd'], process.stdout,
+        docker.run(docker_image, [godot_executable, '--headless', '--verbose', '--import', '--path', '/project'], process.stdout,
         console.log("Starting test run...);
         docker.run(docker_image, [godot_executable, ...flags, '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd'], process.stdout,
 
