@@ -48,9 +48,9 @@ try {
       function onFinished(err, output)
       {
         console.log("Starting image...");
-        console.log("Starting import run: ", [godot_executable, ...flags, '--import', '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd']);
+        console.log("Starting import run...);
         docker.run(docker_image, [godot_executable, ...flags, '--import', '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd'], process.stdout,
-        console.log("Starting test run: ", [godot_executable, ...flags, '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd']);
+        console.log("Starting test run...);
         docker.run(docker_image, [godot_executable, ...flags, '-s', '--path', '/project', 'addons/gut/gut_cmdln.gd'], process.stdout,
 
           // Mount working directory to `/project`
